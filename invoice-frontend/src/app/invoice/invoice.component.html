@@ -1,0 +1,42 @@
+<div class="container mt-5 p-4 bg-light rounded shadow">
+  <h2 class="text-primary mb-4 text-center">📄 Invoice Generator</h2>
+
+  <form (submit)="submit()">
+    <!-- Business Details -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Your Business Name</label>
+      <input [(ngModel)]="invoice.businessName" name="businessName" class="form-control" placeholder="e.g. Prashant Enterprises" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Client Name</label>
+      <input [(ngModel)]="invoice.clientName" name="clientName" class="form-control" placeholder="e.g. ABC Pvt Ltd" required />
+    </div>
+
+    <!-- Invoice Items -->
+    <h5 class="mt-4">🧾 Items</h5>
+    <div *ngFor="let item of invoice.items; let i = index" class="row g-2 align-items-end mb-2">
+      <div class="col-md-4">
+        <input [(ngModel)]="item.description" name="desc{{i}}" class="form-control" placeholder="Description" required />
+      </div>
+      <div class="col-md-2">
+        <input type="number" [(ngModel)]="item.quantity" name="qty{{i}}" class="form-control" placeholder="Qty" required />
+      </div>
+      <div class="col-md-2">
+        <input type="number" [(ngModel)]="item.rate" name="rate{{i}}" class="form-control" placeholder="Rate" required />
+      </div>
+      <div class="col-md-2">
+        <p class="form-control-plaintext text-muted">₹{{ item.quantity * item.rate || 0 }}</p>
+      </div>
+      <div class="col-auto">
+        <button (click)="removeItem(i)" type="button" class="btn btn-outline-danger btn-sm">Remove</button>
+      </div>
+    </div>
+
+    <button (click)="addItem()" type="button" class="btn btn-outline-secondary btn-sm mb-3">+ Add Item</button>
+
+    <!-- Submit -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-success btn-lg">📥 Generate PDF</button>
+    </div>
+  </form>
+</div>
